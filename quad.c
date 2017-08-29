@@ -1,11 +1,14 @@
 #include <stdio.h>
+#include <locale.h>
 
 main()
 {
 	float lado1, lado2;
 	float area;
 	
-	printf("Informe os lados do ret√¢ngulo:\n");
+	setlocale(LC_ALL,"Portuguese_Brazil");
+	
+	printf("Informe os lados do ret‚ngulo:\n");
 	scanf("%f", &lado1);
 	scanf("%f", &lado2);
 
