@@ -1,3 +1,4 @@
+//Aluno: Felipe Cechin Mello. Programa para calcular a distância entre dois pontos da Terra passando pelo interior dela.
 #include <stdio.h>
 #include <math.h>
 
@@ -22,5 +23,5 @@ main()
   
   distancia = sqrt((pow(raio,2)+pow(raio,2)) - 2*pow(raio,2)*((cos(lat1)*cos(lat2)*cos(long1 - long2)) + (sin(lat1)*sin(lat2))));
   
-  printf("A distancia em metros entre esses dois pontos passando pelo interior da Terra e' %.2f",distancia);
+  printf("A distancia em metros entre esses dois pontos passando pelo interior da Terra e' %g\n",distancia);
 }
