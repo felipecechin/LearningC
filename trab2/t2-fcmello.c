@@ -12,67 +12,75 @@ int fatorial(int n)
   return resultado;
 }
 
-double seno(double x, int n) 
-{	
-  return (pow(x,n)/fatorial(n));
+double potencia(double x, int n)
+{
+  return pow(x,n);
 }
 
-double cosseno(double x, int n)
+double termoSerieTaylor(double x, int n) 
 {	
-  return (pow(x,n)/fatorial(n));
+  if (n==0) {
+  	return 1;
+  } else if (n==1) {
+  	return x;
+  } else {
+    return (potencia(x,n)/fatorial(n));
+  }
+}
+
+double calculaFuncaoSenoCosseno(int n, double angulo)
+{
+  int i = 1;
+  double resultado = 0;
+  while(i>=1) {
+    if (termoSerieTaylor(angulo,n) < pow(10,-6)) {
+  	  break;	
+	} else if (i % 2 == 0) {
+	  resultado = resultado - termoSerieTaylor(angulo,n);
+	} else {
+	  resultado = resultado + termoSerieTaylor(angulo,n);
+	}
+    n = n+2;
+  	i++;
+  }
+  return resultado;
+}
+
+double cosseno(double angulo) 
+{
+  return calculaFuncaoSenoCosseno(0, angulo);
+}
+
+double seno(double angulo)
+{
+  return calculaFuncaoSenoCosseno(1, angulo);
+}
+
+double tangente(double seno, double cosseno)
+{
+  return seno/cosseno;
 }
 
 main(void) 
 {
-  double angulo,anguloEmGraus;
-  int n,j;
   double resultadoSeno, resultadoCosseno;
   
-  for (anguloEmGraus=1;anguloEmGraus<90;anguloEmGraus++) {
+  int i = 0;
+  int anguloEmGraus = 0;
+  double angulo = 0;
+  for (i = 1;i<=90;i++) {
+  	angulo = (anguloEmGraus * M_PI)/180;
+  	resultadoSeno = seno(angulo);
+  	resultadoCosseno = cosseno(angulo);
   	
-    angulo = (anguloEmGraus * M_PI)/180;
-    n = 1;
-    j = 1;
-    resultadoSeno = 0;
-    resultadoCosseno = 0;
-  
+    printf("%d %.4Lf    ",anguloEmGraus,tangente(resultadoSeno,resultadoCosseno));
     
-    while(j > 0) {
-  	  if (seno(angulo,n) < pow(10,-6)) {
-  	    j = 0;	
-	  } else {
-	    if (j % 2 == 0) {
-	      resultadoSeno = resultadoSeno - seno(angulo,n);
-	    } else {
-	  	  resultadoSeno = resultadoSeno + seno(angulo,n);
-	    }
-	    n = n+2;
-  	    j++;
-	  }
-    }
-  	
-    printf("Resultado seno: %Lf",resultadoSeno);
-  	
-  	j = 1;
-  	n = 0;
-  	
-    while(j > 0) {
-  	  if (cosseno(angulo,n) < pow(10,-6)) {
-  	    j = 0;	
-	  } else {
-	    if (j % 2 == 0) {
-	      resultadoCosseno = resultadoCosseno - cosseno(angulo,n);
-	    } else {
-	  	  resultadoCosseno = resultadoCosseno + cosseno(angulo,n);
-	    }
-	    n = n+2;
-  	    j++;
-	  }
-    }
-  
-    printf("\nResultado cosseno: %Lf",resultadoCosseno);
-  
-    printf("A tg eh %Lf",resultadoSeno/resultadoCosseno);
+	if(i%3==0){
+      anguloEmGraus = anguloEmGraus - 59;
+      printf("\n");
+	}else{
+	  anguloEmGraus = anguloEmGraus + 30;
+	}
   }
   
 }
