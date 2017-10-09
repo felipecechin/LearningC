@@ -33,6 +33,8 @@ main()
       bool quadPerfeito = true;
 	  int numerador = numero;
 	  int divisao;
+	  int raiz = 1;
+	  int j;
 	  for (i=2;i<numero;i++) {
 	  	int contPrimo = 0;
 	    if (numeroPrimo(i)) {
@@ -50,6 +52,11 @@ main()
 		  if (contPrimo%2 !=0) {
 		    quadPerfeito = false;  
 		    break;
+		  } else if (numero%i==0) {
+		  	contPrimo = contPrimo/2;
+		  	for (j=0;j<contPrimo;j++) {
+		  	  raiz = raiz*i;  	
+			}
 		  }
 	      if (numerador == 1) {
 	        break;	
@@ -57,7 +64,7 @@ main()
 	    }
 	  }
 	  if (quadPerfeito) {
-	  	printf("O numero %d eh quadrado perfeito\n",numero);
+	  	printf("O numero %d eh quadrado perfeito. Raiz: %d\n",numero,raiz);
 	  } else {
 	  	printf("O numero %d nao eh quadrado perfeito\n",numero);
 	  }
