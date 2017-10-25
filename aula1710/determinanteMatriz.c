@@ -12,16 +12,16 @@ float diag2(float m[3][3], int c)
 
 main()
 {
-  float matriz[3][3];
+  float m[3][3],d;
   int i,j;
   for(i=0;i<3;i++) {
     for(j=0;j<3;j++) {
-      scanf("%f",&matriz[i][j]);
+      scanf("%f",&m[i][j]);
 	}
   }
   
   d = diag(m,0) + diag(m,1) + diag(m,2)
       -diag2(m,0) - diag2(m,1) - diag2(m,2);
   
-    
+  printf("%f",d);
 }
