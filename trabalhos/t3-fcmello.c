@@ -18,7 +18,7 @@ int dado()
 
 bool verificaTabuleiro(int valorDado,int tabuleiro[])
 {
-  int i,j,posicaoValorMenor = -1,posicaoValorMaior = -1,cont;
+  int i,j,posicaoValorMenor = -1,posicaoValorMaior = -1,cont = 0;
   bool tabuleiroOk = true,temPosicaoNaoP = false;
   
   for (i=0;i<10;i++) {
@@ -234,10 +234,21 @@ bool verificaTabuleiro(int valorDado,int tabuleiro[])
   return tabuleiroOk;
 }
 
-
-main()
+bool verificaValorDigitado(int valorDigitado,int tabuleiro[])
 {
-  int i,valorDado,valorDigitado,j,k;
+  if (valorDigitado>10 || valorDigitado<=0) {
+    return false;
+  }
+
+  if (tabuleiro[valorDigitado-1]!=0) {
+    return false;
+  } 
+  return true;
+}
+
+int main()
+{
+  int i,valorDado,valorDigitado,j;
   int tabuleiro[10];
   bool perdeu;
   //Funcao colocada abaixo para gerar o valor do dado de forma aleatoria. Sem a funcao, o dado gera quase sempre o mesmo valor.
@@ -275,11 +286,13 @@ main()
 	
 	printf("Em qual posicao nao preenchida do tabuleiro voce quer colocar o valor do dado? ");
 	scanf("%d",&valorDigitado);
+
 	
-	while (tabuleiro[valorDigitado-1] != 0 || valorDigitado>10 || valorDigitado<=0) {
+	while (!verificaValorDigitado(valorDigitado,tabuleiro)) {
 	  printf("Digite uma posicao nao preenchida para colocar o valor do dado: ");
 	  scanf("%d",&valorDigitado);
 	}
+
 	printf("\n-------------------------------------------------------------------------------------\n");
 	valorDigitado--;
 	tabuleiro[valorDigitado] = valorDado;
@@ -310,5 +323,6 @@ main()
     for (j=0;j<10;j++) {
 	  printf("Posicao %2d - %d\n",j+1,tabuleiro[j]);      	
 	} 
-  }  
+  }
+  return 0;  
 }
