@@ -70,13 +70,22 @@ void remove_tralha(char s[])
   int i,j;
   i = 0;
   j = 0;
+  char texto[strlen(s)+1];
   while(s[j]!='\0') {
     if (isalpha(s[j])) {
-      s[i++] = s[j];
+      texto[i++] = s[j];
     }
     j++;
   }
-  s[i] = '\0';
+  texto[i] = '\0';
+  strcpy(s,texto);
+}
+
+bool string_tem_fim(char s[])
+{
+  int tamanho = strlen(s);
+  if (s[tamanho] == '\0') return true;
+  else return false;
 }
 
 int main()
@@ -90,9 +99,14 @@ int main()
   } else {
     printf("Nao eh\n");
   }
-
+  
   remove_tralha(f);
   printf("%s",f);
+  if (string_tem_fim(f)) {
+    printf("\nFoi colocado o \\0");
+  } else {
+    printf("\nNao foi colocado o \\0");
+  }
 
   // if (isalpha(2)) {
   //   printf("o fernando eh gay e puto");
