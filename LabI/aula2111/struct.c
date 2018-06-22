@@ -60,10 +60,25 @@ float calcula_medias(struct aluno t[],int n)
   return s/n;
 }
 
+void troca_o_valor(struct aluno a)
+{
+  printf("%f\n",a.media);
+  a.media = 2;
+  printf("%f\n",a.media);
+}
+
 int main(void)
 {
   struct aluno turma[30];
   int nalunos;
+  struct aluno fernando;
+  fernando.media = 5;
+  fernando.n1 = 5.6;
+  fernando.n2 = 7;
+  printf("%f\n",fernando.n1);
+
+  troca_o_valor(fernando);
+  printf("%f\n",fernando.media);
   float media;
   nalunos = le_alunos("alunos",turma);
   media = calcula_medias(turma,nalunos);
