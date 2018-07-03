@@ -248,6 +248,14 @@ void imprime(struct arvore *a){
   }
 }
 
+void calculaTempo(struct timespec *ts1, struct timespec *ts2){
+    if (ts2->tv_nsec < ts1->tv_nsec) {
+        ts2->tv_nsec += 1000000000;
+        ts2->tv_sec--;
+    }
+    printf("%ld.%09ld\n", (long)(ts2->tv_sec - ts1->tv_sec), ts2->tv_nsec - ts1->tv_nsec);
+}
+
 struct arvore *cria_arvore(struct carro *carro, struct arvore *sae,struct arvore *sad) {
   struct arvore *arvore = malloc(sizeof(arvore));
   arvore->carro = carro;

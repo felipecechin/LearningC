@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 
 int main(){
@@ -26,7 +28,9 @@ int main(){
   //     }
   //     letra[0]++;
   //     strcpy(x,"");
-  // }
-  printf("%d\n",strcmp("aaa","ab"));
+  // 
+  srand(time(NULL));
+  int num = rand()%2147483647;
+  printf("%011d\n",num);
   return 0;
 }

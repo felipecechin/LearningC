@@ -1,0 +1,5 @@
+arvores balanceadas
+- as alturas das sae e sad diferem em no maximo 1 unidade
+- a diferença é chamada de fator de balanceamento
+- inserções a direita FB(-)
+- inserções a esquerda FB(+)
