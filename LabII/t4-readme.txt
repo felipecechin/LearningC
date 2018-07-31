@@ -1,0 +1,1 @@
+Todos os requisitos do enunciado do trabalho 4 foram implementados.

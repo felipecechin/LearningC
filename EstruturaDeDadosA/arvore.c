@@ -12,8 +12,8 @@ int esta_vazia(arvore *a){
 
 void imprime(arvore *a){
   if (!esta_vazia(a)){
-     imprime(a->esq);
-     printf("%i\n", a->valor);
+         imprime(a->esq);
+     printf("%i (%i)\n", a->valor, a->alt);
      imprime(a->dir);
   }
 }
@@ -21,6 +21,7 @@ void imprime(arvore *a){
 arvore *cria_arvore(int valor, arvore *sae, arvore *sad) {
   arvore *arvore = malloc(sizeof(arvore));
   arvore->valor = valor;
+  arvore->alt = 0;
   arvore->esq = sae;
   arvore->dir = sad;
   return arvore;
@@ -44,23 +45,60 @@ int conta_folhas(arvore *a) {
 }
 
 int sao_iguais(arvore *a, arvore *b) {
-  return ( (esta_vazia(a) && esta_vazia(b))
-      || 
-      (!esta_vazia(a) && !esta_vazia(b) && a->valor == b->valor && sao_iguais(a->esq,b->esq) && sao_iguais(a->dir,b->dir))
-    );
+  return (
+   (esta_vazia(a) && esta_vazia(b))
+    || 
+   (!esta_vazia(a) && !esta_vazia(b) && a->valor == b->valor && sao_iguais(a->esq,b->esq) && sao_iguais(a->dir,b->dir))
+  );
 }
 
-arvore *insere_ordenado(int valor, arvore *a) {
-  if (esta_vazia(a)) {
-    a = cria_arvore(valor,cria_vazia(),cria_vazia());
+//rotação RR ou rotação simples a esquerda
+//rotação LL ou rotação simples a direita
+//rotação RL ou rotação dupla a esquerda
+    //rotação LL -> rotação RR
+//rotação LR ou rotação dupla a direita
+    //rotação RR -> rotação LL
+
+
+int calcula_altura(arvore *a) {
+  if (a==NULL) {
+    return -1;
   } else {
-    if (valor < a->valor) {
-      a->esq = insere_ordenado(valor, a->esq);
+    printf("a->valor: %i\n",a->valor);
+    if (calcula_altura(a->dir) > calcula_altura(a->esq)) {
+      return calcula_altura(a->dir)+1;
     } else {
-      a->dir = insere_ordenado(valor, a->dir);
+      return calcula_altura(a->esq)+1;
     }
   }
-  return a;
+}
+
+int calcula_altura_sem_recursao(arvore *a){
+  if (a == NULL)
+    return -1;
+  else if (a->esq==NULL && a->dir==NULL)
+    return 0;
+  else if (a->dir==NULL) 
+    return a->esq->alt+1;
+  else if (a->esq==NULL)
+    return a->dir->alt+1;
+  else if(a->dir->alt > a->esq->alt)
+    return a->dir->alt+1;
+  else 
+    return a->esq->alt+1;
+}
+
+void insere_ordenado(int valor, arvore **a) {
+  if (esta_vazia(*a)) {
+    (*a) = cria_arvore(valor,cria_vazia(),cria_vazia());
+  } else {
+    if (valor < (*a)->valor) {
+      insere_ordenado(valor, &((*a)->esq));
+    } else {
+      insere_ordenado(valor, &((*a)->dir));
+    }
+  }
+  (*a)->alt = calcula_altura_sem_recursao(*a);
 }
 
 int existe_valor(int valor,arvore *a) {
@@ -101,35 +139,34 @@ arvore *remover(arvore *a, int valor) {
     } else {
       arvore *b = encontra_maior_valor(a->esq);
       a->valor = b->valor;
-      b->valor = valor;
-      a->esq = remover(a->esq, valor);
+      a->esq = remover(a->esq, b->valor);
     }
   }
+  a->alt = calcula_altura(a);
+  return a;
 }
 
 
 void main() {
-  arvore *raiz2=NULL;
-  raiz2 = insere_ordenado(30,raiz2);
-  raiz2 = insere_ordenado(10,raiz2);
-  raiz2 = insere_ordenado(15,raiz2);
-  raiz2 = insere_ordenado(15,raiz2);
 
 
   arvore *raiz3=NULL;
-  raiz3 = insere_ordenado(30,raiz3);
-  raiz3 = insere_ordenado(10,raiz3);
-  raiz3 = insere_ordenado(15,raiz3);
-  raiz3 = insere_ordenado(10,raiz3);
+  insere_ordenado(30,&raiz3);
+  insere_ordenado(10,&raiz3);
+
+  insere_ordenado(35,&raiz3);
+  insere_ordenado(5,&raiz3);
   imprime(raiz3); 
-  printf("CONTA-FOLHAS: %d\n",conta_folhas(raiz3));
-  printf("SAO IGUAIS: %d\n",sao_iguais(raiz2,raiz3));
-  printf("EXISTE VALOR: %d\n",existe_valor(12,raiz3));
   printf("\n\n\n");
+  remover(raiz3,30);
+  imprime(raiz3); 
+  // printf("CONTA-FOLHAS: %d\n",conta_folhas(raiz3));
+  // printf("SAO IGUAIS: %d\n",sao_iguais(raiz2,raiz3));
+  // printf("EXISTE VALOR: %d\",existe_valor(12,raiz3));
+  // printf("\n\n\n");
   
 
-  remover(raiz3,10);
-  imprime(raiz3);  
+  // imprime(raiz3);  
 
 
 

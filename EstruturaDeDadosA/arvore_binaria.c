@@ -77,10 +77,13 @@ int sao_iguais(arvore* a, arvore* b){
 int calcula_altura(arvore *a){
   if (a == NULL)
     return -1;
+  else {
+    printf("a->valor: %i\n",a->valor);
   if (calcula_altura(a->dir) > calcula_altura(a->esq))
     return calcula_altura(a->dir)+1;
   else 
     return calcula_altura(a->esq)+1;
+  }
 }
 
 int calcula_altura_sem_recursao(arvore *a){
@@ -158,27 +161,29 @@ arvore *remover(int valor, arvore *a){
 }
 
 void main(){
-  arvore *a1=arvore_vazia();
-  insere_ordenado(30, &a1);
-  imprime(a1);  printf("\n");
-  insere_ordenado(15, &a1);
-  imprime(a1);  printf("\n");
-  insere_ordenado(50, &a1);
-  imprime(a1);  printf("\n");
-  insere_ordenado(25, &a1);
-  imprime(a1);  printf("\n");
-  insere_ordenado(10, &a1);
-  imprime(a1);  printf("\n");
-  insere_ordenado(5, &a1);
-  imprime(a1);  printf("\n");
-  insere_ordenado(31, &a1);
-  imprime(a1);  printf("\n");
+  // arvore *a1=arvore_vazia();
 
-  a1=remover(30,a1);
-  imprime(a1);  printf("\n");
-  a1=remover(31,a1);
-  imprime(a1);  printf("\n");
-  a1=remover(10,a1);
-  imprime(a1);  printf("\n");
+  //   insere_ordenado(30,&a1);
+  // insere_ordenado(10,&a1);
+
+  // insere_ordenado(35,&a1);
+  // insere_ordenado(5,&a1);
+  // imprime(a1);
+arvore *raiz3=NULL;
+  insere_ordenado(30,&raiz3);
+  insere_ordenado(10,&raiz3);
+
+  insere_ordenado(35,&raiz3);
+  insere_ordenado(5,&raiz3);
+  imprime(raiz3); 
+  printf("\n\n\n");
+  remover(30,raiz3);
+  imprime(raiz3); 
+  // a1=remover(30,a1);
+  // imprime(a1);  printf("\n");
+  // a1=remover(31,a1);
+  // imprime(a1);  printf("\n");
+  // a1=remover(10,a1);
+  // imprime(a1);  printf("\n");
 
 }

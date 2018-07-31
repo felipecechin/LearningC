@@ -1,6 +1,7 @@
 
 struct no {
   int valor;
+  int alt;
   struct no* esq;
   struct no* dir;
 };

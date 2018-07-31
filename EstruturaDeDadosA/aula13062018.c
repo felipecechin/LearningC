@@ -35,13 +35,19 @@ void insercao_ordenada(int *vet, int valor) {
 
 void remover(int *vet, int valor) {
   int i = 0;
-  while (vet[i] != vazio) {
+  while (true) {
     if (valor < vet[i]) {
       i = (i*2)+1;
     } else if (valor > vet[i]) {
       i = (i*2)+2;
     } else {
-      vet[i] = vazio;
+      if (vet[(i*2)+1] == vazio) {
+        vet[i] = vet[(i*2)+2];
+        vet[(i*2)+2] = vazio;
+      } else if (vet[(i*2)+2] == vazio) {
+        vet[i] = vet[(i*2)+1];
+        vet[(i*2)+1] = vazio;
+      }
       return;
     }
   }
